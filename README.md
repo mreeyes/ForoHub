@@ -1,84 +1,129 @@
-# 	:toolbox: Proyecto Foro Alura (BackEnd)
+# API ForoHub
 
-Foro Hub es un Web API :globe_with_meridians: creado en Java Spring, que se basa en REST, corresponde a un requisito para la formación de `BacKEnd` de #OracleOne y #Alura.
+Bienvenido a la documentación de la API ForoHub, una aplicación RESTful desarrollada con Spring que proporciona funcionalidades completas para gestionar un foro educativo.
 
-<h2>Base de datos</h2>
+## Descripción
 
-Este API se conecta a una base de datos MySQL, la cuàl contiene una serie de tablas, se detallan a continuación: 
+ForoHub es una API diseñada para facilitar la gestión de tópicos, respuestas, usuarios y cursos dentro de un entorno educativo. Utiliza Spring Security para la autenticación basada en tokens JWT y sigue las mejores prácticas de REST para la organización de sus endpoints.
 
-1. Tabla course :blue_book:: Contiene los cursos que se imparten en el foro.
-2. Tabla status :green_circle::red_circle:: Contiene el estado de los tópicos (Active, Inactive)
-3. Tabla profile :briefcase:: Contiene los diferentes tipos de perfiles de los usuarios (Administrator, Expert, Junior)
-4. Tabla user :pouting_man:: Contiene los usuarios que crean tópicos, respuestas a esos tópicos.
-5. Tabla topic :notebook_with_decorative_cover:: Es la parte fundamental del challenge, crea el foro o la consulta que tiene un usuario en el sistema.
-6. Tabla responses :receipt:: Contiene las respuestas a cada de los tópicos del sistema.
+## Servidores
 
-El modelo de base de datos se observa de la siguiente manera:
+La API se despliega localmente en:
 
-<img src="https://github.com/cpiedraq/foro_hub/blob/changes/images/database.png" alt="Esquema de base de datos">
+- Base URL: http://localhost:8080
+- Swagger: http://localhost:8080/swagger-ui/index.html
 
-<h2>:hammer_and_wrench: Métodos del Web API</h2>
+## Autorización
 
-La función principal de este Web API es crear una tópico(consulta del foro) para uno de los cursos y que otros usuarios puedan ayudarle mediante respuestas.
+La API requiere autorización mediante tokens JWT para acceder a ciertos endpoints. Consulta la sección de Autenticación para más detalles.
 
-El mismo permite consultar, crear, modificar y eliminar tópicos, respuestas. Y permite consultar, crear y modificar usuarios.
+## Tecnologías Utilizadas
 
-A continuación se adjuntan diversas imágenes del proyecto:
+- Spring Boot: Framework para el desarrollo de aplicaciones Java.
+- Spring Security: Manejo de la seguridad y autenticación.
+- JWT (JSON Web Tokens): Para la generación y validación de tokens de acceso.
+- Spring Data JPA: Implementación de persistencia de datos utilizando Hibernate.
+- MySql: Base de datos para el desarrollo y pruebas.
+- Swagger/OpenAPI: Documentación de la API.
+- Maven: Gestión de dependencias y construcción del proyecto.
+- Java 17: Versión del lenguaje de programación utilizada.
 
-- Entorno de desarrollo en ejecución. 
+## Endpoints
 
-<img src="https://github.com/cpiedraq/foro_hub/blob/changes/images/0.png" alt="Entorno de desarrollo">
+### Tópicos (`topico-controller`)
 
-- Métodos del Web API, documentación mediante `Swagger UI`.
+- **Actualizar un tópico**
+  - `PUT /topico/actualizar`
+  - Body: DatosActualizarTopico
 
-<img src="https://github.com/cpiedraq/foro_hub/blob/changes/images/1.png" alt="Metodos 1">
+- **Crear un nuevo tópico**
+  - `POST /topico`
+  - Body: DatosRegistroTopico
 
-<img src="https://github.com/cpiedraq/foro_hub/blob/changes/images/2.png" alt="Metodos 2">
+- **Listar todos los tópicos**
+  - `GET /topico/listar`
+  - Respuesta: List<PageDatosListadoTopico>
 
-<h2>:lock: Autenticación</h2>
+- **Listar tópicos por curso**
+  - `GET /topico/listarPorCurso`
+  - Parámetros: cursoId
+  - Respuesta: List<PageDatosListadoTopico>
 
-- Para utilizar los métodos del Web API es necesario autenticarse, se utiliza JWT para realizarlo, lo debe de realizar en el método `POST` de la ruta `/login`
+- **Obtener detalles de un tópico por ID**
+  - `GET /topico/detalle/{id}`
+  - Respuesta: Topico
 
-<img src="https://github.com/cpiedraq/foro_hub/blob/changes/images/token.png" alt="Autenticarse">
+- **Dar de alta un tópico**
+  - `GET /topico/alta/{id}`
 
-- Una vez generado el token deberá de utilizarse en la sección Authorize (Swagger UI).
+- **Eliminar un tópico (lógico)**
+  - `DELETE /topico/eliminar/{id}`
 
-<img src="https://github.com/cpiedraq/foro_hub/blob/changes/images/3.png" alt="Autenticarse">
+- **Eliminar permanentemente un tópico**
+  - `DELETE /topico/baja/{id}`
 
-- Una vez verificado el token podra consumir los mètodos de `GET`, `POST`, `PUT`, `DELETE`.
+### Respuestas (`respuesta-controller`)
 
-<img src="https://github.com/cpiedraq/foro_hub/blob/changes/images/4.png" alt="Autenticarse">
+- **Actualizar una respuesta**
+  - `PUT /respuesta/actualizar`
+  - Body: DatosActualizarRespuestas
 
-<h2>:hammer_and_pick: Métodos más utilizados del Web API</h2>
+- **Registrar una nueva respuesta**
+  - `POST /respuesta/registrar`
+  - Body: DatosRegistroRespuestas
 
-- Este es un ejemplo del método `GET` de la ruta /topics, que retorna todos los tópicos y las respuestas que le han brindado al mismo.
+- **Obtener la solución de una respuesta por ID**
+  - `GET /respuesta/solucion/{id}`
+  - Respuesta: Respuesta
 
-<img src="https://github.com/cpiedraq/foro_hub/blob/changes/images/5.png" alt="Metodo GET topics">
+- **Listar todas las respuestas**
+  - `GET /respuesta/listar`
+  - Respuesta: List<PageDatosRespuestaRespuestas>
 
-- En la siguiente imágen se observa el método `POST` para crear un nuevo tópico.
+- **Listar respuestas por tópico**
+  - `GET /respuesta/listarPorTopico/{topicoId}`
+  - Respuesta: List<PageDatosRespuestaRespuestas>
 
-<img src="https://github.com/cpiedraq/foro_hub/blob/changes/images/6.png" alt="Crear un nuevo tópico">
+- **Obtener detalles de una respuesta por ID**
+  - `GET /respuesta/detalle/{id}`
+  - Respuesta: Respuesta
 
-- Se observa el método `POST` para crear una respuesta al tópico creado anteriormente.
+- **Eliminar una respuesta (lógico)**
+  - `DELETE /respuesta/eliminar/{id}`
 
-<img src="https://github.com/cpiedraq/foro_hub/blob/changes/images/7.png" alt="Crear un nuevo tópico">
+- **Eliminar permanentemente una respuesta**
+  - `DELETE /respuesta/baja/{id}`
 
-- Acá se observa como la consulta :mag: al tópico y la respuesta registrada.
+### Usuarios (`usuario-controller`)
 
-<img src="https://github.com/cpiedraq/foro_hub/blob/changes/images/8.png" alt="Crear un nuevo tópico">
+- **Registrar un nuevo usuario**
+  - `POST /usuario/registrar`
+  - Body: DatosRegistroUsuario
 
-------------------------
+### Autenticación (`autenticacion-controller`)
 
-<h2>Tecnologías Utilizadas</h2>
+- **Iniciar sesión (login)**
+  - `POST /login`
+  - Body: DatosAutenticacionUsuario
+  - Respuesta: DatosJWTtoken
 
-- Lombok
-- JDK 17.
-- Maven.
-- Spring Web
-- Spring Boot.
-- MySQL.
-- Spring Data JPA.
-- Flyway Migration
-- Validation
-- Spring Security - Auth0 para la creación de JWT.
-- Swagger UI. 
+- **Redirigir después del login**
+  - `GET /login/redirect`
+
+### Cursos (`curso-controller`)
+
+- **Registrar un nuevo curso**
+  - `POST /curso/registrar`
+  - Body: DatosRegistroCurso
+
+## Seguridad y Autenticación
+
+La API utiliza Spring Security para manejar la autenticación y autorización. Los endpoints protegidos requieren un token JWT válido en el header de autorización.
+
+## Documentación Adicional
+
+Para una documentación más detallada sobre los parámetros, cuerpos de las peticiones y respuestas de cada endpoint, se puede explorar la documentación Swagger de la API accediendo a `/swagger-ui/index.html`.
+
+## Desarrollado Por
+
+Este proyecto fue desarrollado por Julia Daniela Rodriguez.
