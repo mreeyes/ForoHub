@@ -1,4 +1,4 @@
-# ForoHub API
+# API ForoHub
 
 Bienvenido a la documentación de la API ForoHub, una aplicación RESTful desarrollada con Spring que proporciona funcionalidades completas para gestionar un foro educativo.
 
@@ -10,8 +10,8 @@ ForoHub es una API diseñada para facilitar la gestión de tópicos, respuestas,
 
 La API se despliega localmente en:
 
-- **Base URL:** `http://localhost:8080`
-- **Swagger:** `http://localhost:8080/swagger-ui/index.html`
+- Base URL: http://localhost:8080
+- Swagger: http://localhost:8080/swagger-ui/index.html
 
 ## Autorización
 
@@ -19,137 +19,108 @@ La API requiere autorización mediante tokens JWT para acceder a ciertos endpoin
 
 ## Tecnologías Utilizadas
 
-- **Spring Boot:** Framework para el desarrollo de aplicaciones Java.
-- **Spring Security:** Manejo de la seguridad y autenticación.
-- **JWT (JSON Web Tokens):** Para la generación y validación de tokens de acceso.
-- **Spring Data JPA:** Implementación de persistencia de datos utilizando Hibernate.
-- **MySql:** Base de datos para el desarrollo y pruebas.
-- **Swagger/OpenAPI:** Documentación de la API.
-- **Maven:** Gestión de dependencias y construcción del proyecto.
-- **Java 17:** Versión del lenguaje de programación utilizada.
+- Spring Boot: Framework para el desarrollo de aplicaciones Java.
+- Spring Security: Manejo de la seguridad y autenticación.
+- JWT (JSON Web Tokens): Para la generación y validación de tokens de acceso.
+- Spring Data JPA: Implementación de persistencia de datos utilizando Hibernate.
+- MySql: Base de datos para el desarrollo y pruebas.
+- Swagger/OpenAPI: Documentación de la API.
+- Maven: Gestión de dependencias y construcción del proyecto.
+- Java 17: Versión del lenguaje de programación utilizada.
 
 ## Endpoints
 
-### Tópicos (topico-controller)
+### Tópicos (`topico-controller`)
 
 - **Actualizar un tópico**
-  ```http
-  PUT /topico/actualizar
-  Body: DatosActualizarTopico
-Crear un nuevo tópico
+  - `PUT /topico/actualizar`
+  - Body: DatosActualizarTopico
 
-http
-Copiar código
-POST /topico
-Body: DatosRegistroTopico
-Listar todos los tópicos
+- **Crear un nuevo tópico**
+  - `POST /topico`
+  - Body: DatosRegistroTopico
 
-http
-Copiar código
-GET /topico/listar
-Respuesta: List<PageDatosListadoTopico>
-Listar tópicos por curso
+- **Listar todos los tópicos**
+  - `GET /topico/listar`
+  - Respuesta: List<PageDatosListadoTopico>
 
-http
-Copiar código
-GET /topico/listarPorCurso
-Parámetros: cursoId
-Respuesta: List<PageDatosListadoTopico>
-Obtener detalles de un tópico por ID
+- **Listar tópicos por curso**
+  - `GET /topico/listarPorCurso`
+  - Parámetros: cursoId
+  - Respuesta: List<PageDatosListadoTopico>
 
-http
-Copiar código
-GET /topico/detalle/{id}
-Respuesta: Topico
-Dar de alta un tópico
+- **Obtener detalles de un tópico por ID**
+  - `GET /topico/detalle/{id}`
+  - Respuesta: Topico
 
-http
-Copiar código
-GET /topico/alta/{id}
-Eliminar un tópico (lógico)
+- **Dar de alta un tópico**
+  - `GET /topico/alta/{id}`
 
-http
-Copiar código
-DELETE /topico/eliminar/{id}
-Eliminar permanentemente un tópico
+- **Eliminar un tópico (lógico)**
+  - `DELETE /topico/eliminar/{id}`
 
-http
-Copiar código
-DELETE /topico/baja/{id}
-Respuestas (respuesta-controller)
-Actualizar una respuesta
+- **Eliminar permanentemente un tópico**
+  - `DELETE /topico/baja/{id}`
 
-http
-Copiar código
-PUT /respuesta/actualizar
-Body: DatosActualizarRespuestas
-Registrar una nueva respuesta
+### Respuestas (`respuesta-controller`)
 
-http
-Copiar código
-POST /respuesta/registrar
-Body: DatosRegistroRespuestas
-Obtener la solución de una respuesta por ID
+- **Actualizar una respuesta**
+  - `PUT /respuesta/actualizar`
+  - Body: DatosActualizarRespuestas
 
-http
-Copiar código
-GET /respuesta/solucion/{id}
-Respuesta: Respuesta
-Listar todas las respuestas
+- **Registrar una nueva respuesta**
+  - `POST /respuesta/registrar`
+  - Body: DatosRegistroRespuestas
 
-http
-Copiar código
-GET /respuesta/listar
-Respuesta: List<PageDatosRespuestaRespuestas>
-Listar respuestas por tópico
+- **Obtener la solución de una respuesta por ID**
+  - `GET /respuesta/solucion/{id}`
+  - Respuesta: Respuesta
 
-http
-Copiar código
-GET /respuesta/listarPorTopico/{topicoId}
-Respuesta: List<PageDatosRespuestaRespuestas>
-Obtener detalles de una respuesta por ID
+- **Listar todas las respuestas**
+  - `GET /respuesta/listar`
+  - Respuesta: List<PageDatosRespuestaRespuestas>
 
-http
-Copiar código
-GET /respuesta/detalle/{id}
-Respuesta: Respuesta
-Eliminar una respuesta (lógico)
+- **Listar respuestas por tópico**
+  - `GET /respuesta/listarPorTopico/{topicoId}`
+  - Respuesta: List<PageDatosRespuestaRespuestas>
 
-http
-Copiar código
-DELETE /respuesta/eliminar/{id}
-Eliminar permanentemente una respuesta
+- **Obtener detalles de una respuesta por ID**
+  - `GET /respuesta/detalle/{id}`
+  - Respuesta: Respuesta
 
-http
-Copiar código
-DELETE /respuesta/baja/{id}
-Usuarios (usuario-controller)
-Registrar un nuevo usuario
-http
-Copiar código
-POST /usuario/registrar
-Body: DatosRegistroUsuario
-Autenticación (autenticacion-controller)
-Iniciar sesión (login)
+- **Eliminar una respuesta (lógico)**
+  - `DELETE /respuesta/eliminar/{id}`
 
-http
-Copiar código
-POST /login
-Body: DatosAutenticacionUsuario
-Respuesta: DatosJWTtoken
-Redirigir después del login
+- **Eliminar permanentemente una respuesta**
+  - `DELETE /respuesta/baja/{id}`
 
-http
-Copiar código
-GET /login/redirect
-Cursos (curso-controller)
-Registrar un nuevo curso
-http
-Copiar código
-POST /curso/registrar
-Body: DatosRegistroCurso
-Seguridad y Autenticación
+### Usuarios (`usuario-controller`)
+
+- **Registrar un nuevo usuario**
+  - `POST /usuario/registrar`
+  - Body: DatosRegistroUsuario
+
+### Autenticación (`autenticacion-controller`)
+
+- **Iniciar sesión (login)**
+  - `POST /login`
+  - Body: DatosAutenticacionUsuario
+  - Respuesta: DatosJWTtoken
+
+- **Redirigir después del login**
+  - `GET /login/redirect`
+
+### Cursos (`curso-controller`)
+
+- **Registrar un nuevo curso**
+  - `POST /curso/registrar`
+  - Body: DatosRegistroCurso
+
+## Seguridad y Autenticación
+
 La API utiliza Spring Security para manejar la autenticación y autorización. Los endpoints protegidos requieren un token JWT válido en el header de autorización.
 
-Documentación Adicional
-Para una documentación más detallada sobre los parámetros, cuerpos de las peticiones y respuestas de cada endpoint, se puede explorar la documentación Swagger de la API accediendo a /v3/api-docs.
+## Documentación Adicional
+
+Para una documentación más detallada sobre los parámetros, cuerpos de las peticiones y respuestas de cada endpoint, se puede explorar la documentación Swagger de la API accediendo a `/swagger-ui/index.html`.
+
